@@ -1,0 +1,52 @@
+(0:29 - 24:30)
+
+Trong video này, mình hướng dẫn các bạn thực hiện các thao tác trên Docker, sau đó dữ liệu sẽ đi vào Database pgAdmin 4. Chủ yếu là mình làm một ứng dụng demo hệ thống có tích hợp AI. AI sẽ có nhiệm vụ đối chiếu luật dựa trên quy trình kiểm soát CCPA mà một người kiểm kê hợp đồng thường phải đọc mất 4 tiếng để tìm lỗi, giờ rút xuống còn 10 giây. Công cụ này tự động hóa tất cả quy trình kiểm kê, giúp các luật sư làm việc nhẹ nhàng và bớt nhọc nhằn hơn.
+
+Trước hết, mình cần biết luồng thao tác trước. Thao tác của mình như sau: Cần có Docker và một tài khoản đã được thiết lập. Sau đó, mình sử dụng lệnh: "docker-compose up -d". Để chạy được lệnh này, bạn phải cài đặt Docker trước. Sau đó, mình tạo một file YAML trong thư mục tên là "Compliance System", đặt tên file là "docker-compose.yaml". 
+
+Các bạn chép dữ liệu cấu hình YAML vào file đó. Password mình đặt là "admin123" (không được để trống hoặc bắt đầu bằng số). Sau đó chạy lệnh "docker-compose up -d" để kéo toàn bộ dữ liệu về Docker. Khi bấm Start, container sẽ chạy. Đó là công đoạn thiết lập Docker.
+
+Tiếp theo, tải pgAdmin 4 về cài đặt. Chuột phải vào Server, chọn Register -> Server. Đặt tên Server, phần Connection điền Hostname là "localhost", Username là "admin" và Password là "admin123" như đã cấu hình trong file YAML. Khi kết nối thành công, bạn sẽ thấy Database "compliancedb". Mình dùng Docker để có thể thay đổi môi trường dễ dàng.
+
+Bây giờ mình sẽ thực hiện tạo bảng. Mình dùng lệnh SQL để Insert dữ liệu mẫu, nếu hiện thông báo "Query returned successfully" là thành công. File này mình lưu là "init.sql" trong thư mục "dbinit". 
+
+Kiểm tra dữ liệu, chúng ta có 3 bảng: 
+1. Users: Quản lý người dùng.
+2. Documents: Cho phép người dùng tải lên hợp đồng.
+3. Reports: Lưu trữ báo cáo để người dùng tải về.
+
+Sau khi có Database, mình chuyển sang .NET 9 Core API. Vào thư mục Backend, chạy lệnh: "dotnet new webapi -n ComplianceApi". Tiếp theo, mình cài đặt 2 NuGet Packages là: "Npgsql.EntityFrameworkCore.PostgreSQL" và "Microsoft.EntityFrameworkCore.Design".
+
+Bước 1.4: Định nghĩa Model và DbContext. Tạo folder "Models" và "Data". Tạo file "Document.cs" trong Models và "ApplicationDbContext.cs" trong Data. Trong file "appsettings.json", thêm chuỗi kết nối (Connection String) tới PostgreSQL với Port 5432, Database là "compliancedb", user "admin" và pass "admin123".
+
+Tiếp theo, đăng ký Connection String trong file "Program.cs". Dùng "builder.Services.AddDbContext" để tích hợp ApplicationDbContext đã tạo với 3 bảng: Reports, Documents, và Users.
+
+Bước 3: Thực hiện lệnh Migration đầu tiên. Mở Terminal trong Backend và chạy:
+1. "dotnet ef migrations add InitialCreate"
+2. "dotnet ef database update"
+(Nếu chưa có công cụ EF, hãy chạy lệnh: "dotnet tool install --global dotnet-ef"). Lưu ý nếu dùng .NET 9 mà gặp lỗi thư viện, có thể hạ version các package xuống 8.0.2 để ổn định.
+
+Tiếp theo, định nghĩa các lớp Document và Report. Đây là các lớp đại diện cho dữ liệu để tương tác giữa giao diện và Database. Lớp Report có ID, DocumentId, Score, Status và Result (kiểu JSON). Lớp Document có ID, UserId, FileName, FilePath, Status và UploadedAt. Lưu ý về vấn đề "Nullable" trong C#, các kiểu string nên được khởi tạo là "string.Empty" hoặc "" để tránh cảnh báo lỗi CS8618.
+
+Bây giờ chúng ta chạy thử. Đảm bảo Docker Desktop đã bật và Container đang chạy ở cổng 5432. Trong "appsettings.json", mình để Password trực tiếp để demo nhanh. 
+
+Mình dùng pgAdmin 4 để kiểm tra các Table. Để tránh xung đột khi Migration, mình xóa các bảng cũ tạo thủ công đi để EF Core tự tạo lại từ đầu. Khi chạy lệnh Update, hệ thống sẽ yêu cầu password "admin123". Nếu thấy bảng "__EFMigrationsHistory" xuất hiện là bạn đã làm đúng.
+
+Tiếp theo, mở Controller "UploadController". Để upload được file, mình cần một User mặc định (để vượt qua ràng buộc Khóa ngoại - Foreign Key). Mình dùng SQL Insert một User mẫu với ID là "00000000-0000-0000-0000-000000000000". 
+
+Thử nghiệm API qua Swagger: 
+- Nếu tải lên file ảnh (JPG, PNG), hệ thống sẽ báo lỗi (vì mình đã code chặn chỉ nhận file tài liệu). 
+- Nếu tải lên file PDF hoặc Text, hệ thống báo thành công. 
+
+Kiểm tra trong thư mục "InternalStorage/Documents", file đã được lưu vật lý tại đó. Kiểm tra trong pgAdmin 4, chuột phải vào bảng Documents -> View/Edit Data -> All Rows, bạn sẽ thấy dòng dữ liệu mới với trạng thái là "Pending" và đường dẫn FilePath chính xác.
+
+Cuối cùng, để mở được Swagger, trong "Program.cs" mình cấu hình: AddEndpointsApiExplorer và AddSwaggerGen. Trong Middleware, cấu hình app.UseSwagger() và app.UseSwaggerUI() chỉ chạy trong môi trường Development. 
+
+Trong Controller, mình dùng Attribute [ApiController] và [Route("api/[controller]")]. Phương thức "UploadLocal" sử dụng HTTP POST, nhận tham số là "IFormFile". Swagger sẽ tự động nhận diện và hiển thị nút "Choose File".
+
+Như vậy, chúng ta đã hoàn thành Giai đoạn 1: 
+1. Thiết lập Workspace.
+2. Cấu hình Docker & PostgreSQL.
+3. Xây dựng Core Backend với .NET 9.
+4. Phát triển tính năng Upload lưu vào ổ cứng nội bộ và lưu Metadata vào Database.
+5. Xử lý lỗi ràng buộc Khóa ngoại và chặn định dạng file không hợp lệ. Hệ thống hiện chỉ nhận file tài liệu, trạng thái lưu là Pending.

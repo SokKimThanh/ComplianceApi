@@ -1,0 +1,282 @@
+1
+00:00:29,000 --> 00:00:45,000
+Trong video này, mình h??ng d?n các b?n th?c hi?n
+các thao tác trên Docker, sau ?ó d? li?u s? ?i vào
+Database pgAdmin 4.
+
+2
+00:00:45,000 --> 00:01:05,000
+Ch? y?u là mình làm m?t ?ng d?ng demo h? th?ng có
+tích h?p AI. AI s? có nhi?m v? ??i chi?u lu?t d?a
+trên quy trình ki?m soát CCPA.
+
+3
+00:01:05,000 --> 00:01:20,000
+M?t ng??i ki?m kê h?p ??ng th??ng ph?i ??c m?t 4
+ti?ng ?? tìm l?i, gi? rút xu?ng còn 10 giây.
+
+4
+00:01:20,000 --> 00:01:35,000
+Công c? này t? ??ng hóa t?t c? quy trình ki?m kê,
+giúp các lu?t s? làm vi?c nh? nhàng và b?t nh?c
+nh?n h?n.
+
+5
+00:01:35,000 --> 00:01:50,000
+Tr??c h?t, mình c?n bi?t lu?ng thao tác tr??c.
+C?n có Docker và m?t tài kho?n ?ã ???c thi?t l?p.
+
+6
+00:01:50,000 --> 00:02:05,000
+Sau ?ó, mình s? d?ng l?nh: "docker-compose up -d".
+?? ch?y ???c l?nh này, b?n ph?i cài ??t Docker
+tr??c.
+
+7
+00:02:05,000 --> 00:02:20,000
+Sau ?ó, mình t?o m?t file YAML trong th? m?c tên
+là "Compliance System", ??t tên file là
+"docker-compose.yaml".
+
+8
+00:02:20,000 --> 00:02:35,000
+Các b?n chép d? li?u c?u hình YAML vào file ?ó.
+Password mình ??t là "admin123".
+
+9
+00:02:35,000 --> 00:02:50,000
+Không ???c ?? tr?ng ho?c b?t ??u b?ng s?. Sau ?ó
+ch?y l?nh "docker-compose up -d" ?? kéo toàn b?
+d? li?u v? Docker.
+
+10
+00:02:50,000 --> 00:03:05,000
+Khi b?m Start, container s? ch?y. ?ó là công ?o?n
+thi?t l?p Docker.
+
+11
+00:03:05,000 --> 00:03:20,000
+Ti?p theo, t?i pgAdmin 4 v? cài ??t. Chu?t ph?i
+vào Server, ch?n Register -> Server.
+
+12
+00:03:20,000 --> 00:03:35,000
+??t tên Server, ph?n Connection ?i?n Hostname là
+"localhost", Username là "admin".
+
+13
+00:03:35,000 --> 00:03:50,000
+Password là "admin123" nh? ?ã c?u hình trong file
+YAML. Khi k?t n?i thành công, b?n s? th?y Database
+"compliancedb".
+
+14
+00:03:50,000 --> 00:04:05,000
+Mình dùng Docker ?? có th? thay ??i môi tr??ng d?
+dàng.
+
+15
+00:04:05,000 --> 00:04:20,000
+Bây gi? mình s? th?c hi?n t?o b?ng. Mình dùng l?nh
+SQL ?? Insert d? li?u m?u.
+
+16
+00:04:20,000 --> 00:04:35,000
+N?u hi?n thông báo "Query returned successfully"
+là thành công. File này mình l?u là "init.sql"
+trong th? m?c "dbinit".
+
+17
+00:04:35,000 --> 00:04:55,000
+Ki?m tra d? li?u, chúng ta có 3 b?ng:
+1. Users: Qu?n lý ng??i dùng
+2. Documents: Cho phép ng??i dùng t?i lên h?p ??ng
+
+18
+00:04:55,000 --> 00:05:10,000
+3. Reports: L?u tr? báo cáo ?? ng??i dùng t?i v?.
+
+19
+00:05:10,000 --> 00:05:25,000
+Sau khi có Database, mình chuy?n sang .NET 9 Core
+API. Vào th? m?c Backend, ch?y l?nh:
+
+20
+00:05:25,000 --> 00:05:40,000
+"dotnet new webapi -n ComplianceApi". Ti?p theo,
+mình cài ??t 2 NuGet Packages.
+
+21
+00:05:40,000 --> 00:05:55,000
+"Npgsql.EntityFrameworkCore.PostgreSQL" và
+"Microsoft.EntityFrameworkCore.Design".
+
+22
+00:05:55,000 --> 00:06:15,000
+B??c 1.4: ??nh ngh?a Model và DbContext. T?o
+folder "Models" và "Data". T?o file "Document.cs"
+trong Models.
+
+23
+00:06:15,000 --> 00:06:30,000
+Và "ApplicationDbContext.cs" trong Data. Trong
+file "appsettings.json", thêm chu?i k?t n?i.
+
+24
+00:06:30,000 --> 00:06:45,000
+Connection String t?i PostgreSQL v?i Port 5432,
+Database là "compliancedb", user "admin" và pass
+"admin123".
+
+25
+00:06:45,000 --> 00:07:00,000
+Ti?p theo, ??ng ký Connection String trong file
+"Program.cs". Dùng "builder.Services.AddDbContext"
+
+26
+00:07:00,000 --> 00:07:15,000
+?? tích h?p ApplicationDbContext ?ã t?o v?i 3
+b?ng: Reports, Documents, và Users.
+
+27
+00:07:15,000 --> 00:07:35,000
+B??c 3: Th?c hi?n l?nh Migration ??u tiên. M?
+Terminal trong Backend và ch?y:
+"dotnet ef migrations add InitialCreate"
+
+28
+00:07:35,000 --> 00:07:50,000
+Sau ?ó ch?y: "dotnet ef database update". N?u ch?a
+có công c? EF, hãy ch?y l?nh:
+
+29
+00:07:50,000 --> 00:08:05,000
+"dotnet tool install --global dotnet-ef". L?u ý
+n?u dùng .NET 9 mà g?p l?i th? vi?n.
+
+30
+00:08:05,000 --> 00:08:20,000
+Có th? h? version các package xu?ng 8.0.2 ?? ?n
+??nh.
+
+31
+00:08:20,000 --> 00:08:40,000
+Ti?p theo, ??nh ngh?a các l?p Document và Report.
+?ây là các l?p ??i di?n cho d? li?u ?? t??ng tác
+gi?a giao di?n và Database.
+
+32
+00:08:40,000 --> 00:09:00,000
+L?p Report có ID, DocumentId, Score, Status và
+Result (ki?u JSON). L?p Document có ID, UserId,
+FileName, FilePath, Status và UploadedAt.
+
+33
+00:09:00,000 --> 00:09:20,000
+L?u ý v? v?n ?? "Nullable" trong C#, các ki?u
+string nên ???c kh?i t?o là "string.Empty" ho?c ""
+?? tránh c?nh báo l?i CS8618.
+
+34
+00:09:20,000 --> 00:09:35,000
+Bây gi? chúng ta ch?y th?. ??m b?o Docker Desktop
+?ã b?t và Container ?ang ch?y ? c?ng 5432.
+
+35
+00:09:35,000 --> 00:09:50,000
+Trong "appsettings.json", mình ?? Password tr?c
+ti?p ?? demo nhanh.
+
+36
+00:09:50,000 --> 00:10:10,000
+Mình dùng pgAdmin 4 ?? ki?m tra các Table. ??
+tránh xung ??t khi Migration, mình xóa các b?ng c?
+t?o th? công.
+
+37
+00:10:10,000 --> 00:10:25,000
+?? EF Core t? t?o l?i t? ??u. Khi ch?y l?nh
+Update, h? th?ng s? yêu c?u password "admin123".
+
+38
+00:10:25,000 --> 00:10:40,000
+N?u th?y b?ng "__EFMigrationsHistory" xu?t hi?n là
+b?n ?ã làm ?úng.
+
+39
+00:10:40,000 --> 00:11:00,000
+Ti?p theo, m? Controller "UploadController". ??
+upload ???c file, mình c?n m?t User m?c ??nh ??
+v??t qua ràng bu?c Khóa ngo?i.
+
+40
+00:11:00,000 --> 00:11:20,000
+Mình dùng SQL Insert m?t User m?u v?i ID là
+"00000000-0000-0000-0000-000000000000".
+
+41
+00:11:20,000 --> 00:11:40,000
+Th? nghi?m API qua Swagger: N?u t?i lên file ?nh
+(JPG, PNG), h? th?ng s? báo l?i vì mình ?ã code
+ch?n ch? nh?n file tài li?u.
+
+42
+00:11:40,000 --> 00:12:00,000
+N?u t?i lên file PDF ho?c Text, h? th?ng báo thành
+công.
+
+43
+00:12:00,000 --> 00:12:20,000
+Ki?m tra trong th? m?c "InternalStorage/Documents",
+file ?ã ???c l?u v?t lý t?i ?ó.
+
+44
+00:12:20,000 --> 00:12:40,000
+Ki?m tra trong pgAdmin 4, chu?t ph?i vào b?ng
+Documents -> View/Edit Data -> All Rows.
+
+45
+00:12:40,000 --> 00:13:00,000
+B?n s? th?y dòng d? li?u m?i v?i tr?ng thái là
+"Pending" và ???ng d?n FilePath chính xác.
+
+46
+00:13:00,000 --> 00:13:20,000
+Cu?i cùng, ?? m? ???c Swagger, trong "Program.cs"
+mình c?u hình: AddEndpointsApiExplorer và
+AddSwaggerGen.
+
+47
+00:13:20,000 --> 00:13:40,000
+Trong Middleware, c?u hình app.UseSwagger() và
+app.UseSwaggerUI() ch? ch?y trong môi tr??ng
+Development.
+
+48
+00:13:40,000 --> 00:14:00,000
+Trong Controller, mình dùng Attribute
+[ApiController] và [Route("api/[controller]")].
+
+49
+00:14:00,000 --> 00:14:20,000
+Ph??ng th?c "UploadLocal" s? d?ng HTTP POST, nh?n
+tham s? là "IFormFile". Swagger s? t? ??ng nh?n
+di?n và hi?n th? nút "Choose File".
+
+50
+00:14:20,000 --> 00:14:40,000
+Nh? v?y, chúng ta ?ã hoàn thành Giai ?o?n 1:
+1. Thi?t l?p Workspace
+2. C?u hình Docker & PostgreSQL
+
+51
+00:14:40,000 --> 00:15:00,000
+3. Xây d?ng Core Backend v?i .NET 9
+4. Phát tri?n tính n?ng Upload l?u vào ? c?ng n?i
+b? và l?u Metadata vào Database
+
+52
+00:15:00,000 --> 00:15:20,000
+5. X? lý l?i ràng bu?c Khóa ngo?i và ch?n ??nh
+d?ng file không h?p l?. H? th?ng hi?n ch? nh?n
+file tài li?u, tr?ng thái l?u là Pending.
