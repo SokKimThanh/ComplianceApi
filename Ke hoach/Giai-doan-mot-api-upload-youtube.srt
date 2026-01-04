@@ -1,282 +1,1042 @@
-1
+﻿1
 00:00:29,000 --> 00:00:45,000
-Trong video n�y, m�nh h??ng d?n c�c b?n th?c hi?n
-c�c thao t�c tr�n Docker, sau ?� d? li?u s? ?i v�o
-Database pgAdmin 4.
+Trong video này, mình hướng dẫn mấy bạn làm một
+video thao tác trên Docker. Rồi sau đó là nó sẽ
+đi vào trong file database pgAdmin 4.
 
 2
 00:00:45,000 --> 00:01:05,000
-Ch? y?u l� m�nh l�m m?t ?ng d?ng demo h? th?ng c�
-t�ch h?p AI. AI s? c� nhi?m v? ??i chi?u lu?t d?a
-tr�n quy tr�nh ki?m so�t CCPA.
+Chủ yếu đó là mình làm một hướng dẫn demo một hệ
+thống mà trong đó có AI. Cái AI sẽ có nhiệm vụ đó
+chính là mình phải đối chiếu luật.
 
 3
-00:01:05,000 --> 00:01:20,000
-M?t ng??i ki?m k� h?p ??ng th??ng ph?i ??c m?t 4
-ti?ng ?? t�m l?i, gi? r�t xu?ng c�n 10 gi�y.
+00:01:05,000 --> 00:01:25,000
+Dựa trên quy trình kiểm soát CCPA mà một người
+kiểm kê hợp đồng đó. Người ta đọc 4 tiếng để tìm
+lỗi, giờ xuống còn có 10 giây.
 
 4
-00:01:20,000 --> 00:01:35,000
-C�ng c? n�y t? ??ng h�a t?t c? quy tr�nh ki?m k�,
-gi�p c�c lu?t s? l�m vi?c nh? nh�ng v� b?t nh?c
-nh?n h?n.
+00:01:25,000 --> 00:01:45,000
+Thì công cụ này tự động hóa tất cả các quy trình
+kiểm kê. Đỡ vất vả cho người luật sư đó khi mà sử
+dụng công cụ này.
 
 5
-00:01:35,000 --> 00:01:50,000
-Tr??c h?t, m�nh c?n bi?t lu?ng thao t�c tr??c.
-C?n c� Docker v� m?t t�i kho?n ?� ???c thi?t l?p.
+00:01:45,000 --> 00:02:00,000
+Nên nhẹ nhàng hơn và bớt nhọc nhằn đi. Trước hết
+là mình cần phải biết được cách luồng thao tác
+trước đi.
 
 6
-00:01:50,000 --> 00:02:05,000
-Sau ?�, m�nh s? d?ng l?nh: "docker-compose up -d".
-?? ch?y ???c l?nh n�y, b?n ph?i c�i ??t Docker
-tr??c.
+00:02:00,000 --> 00:02:20,000
+Cái thao tác của mình là như sau: Mình cần có một
+cái Docker như thế này. Mà một cái tài khoản đã
+được thiết lập rồi.
 
 7
-00:02:05,000 --> 00:02:20,000
-Sau ?�, m�nh t?o m?t file YAML trong th? m?c t�n
-l� "Compliance System", ??t t�n file l�
-"docker-compose.yaml".
+00:02:20,000 --> 00:02:40,000
+Sau đó mình sẽ dùng một cái lệnh đó chính là lệnh
+này. Mình sẽ dùng lệnh này: docker-compose up -d.
 
 8
-00:02:20,000 --> 00:02:35,000
-C�c b?n ch�p d? li?u c?u h�nh YAML v�o file ?�.
-Password m�nh ??t l� "admin123".
+00:02:40,000 --> 00:03:00,000
+Để làm được cái lệnh này thì mình phải có cài đặt
+Docker trước. Với tài khoản thiết lập sau đó mình
+sẽ tạo ra một file YAML.
 
 9
-00:02:35,000 --> 00:02:50,000
-Kh�ng ???c ?? tr?ng ho?c b?t ??u b?ng s?. Sau ?�
-ch?y l?nh "docker-compose up -d" ?? k�o to�n b?
-d? li?u v? Docker.
+00:03:00,000 --> 00:03:20,000
+Một cái thư mục tên là Compliance System. Và mình
+sẽ đặt cái tên file YAML đó là docker-compose.yaml.
 
 10
-00:02:50,000 --> 00:03:05,000
-Khi b?m Start, container s? ch?y. ?� l� c�ng ?o?n
-thi?t l?p Docker.
+00:03:20,000 --> 00:03:40,000
+Sau đó mình chép cái dữ liệu lệnh này vào. Dữ liệu
+YAML này vào trong cái file đó.
 
 11
-00:03:05,000 --> 00:03:20,000
-Ti?p theo, t?i pgAdmin 4 v? c�i ??t. Chu?t ph?i
-v�o Server, ch?n Register -> Server.
+00:03:40,000 --> 00:04:00,000
+Cái password này mình đặt tên là admin123.
+Password khác cũng được. Nhưng mà không được để
+trống hoặc để số.
 
 12
-00:03:20,000 --> 00:03:35,000
-??t t�n Server, ph?n Connection ?i?n Hostname l�
-"localhost", Username l� "admin".
+00:04:00,000 --> 00:04:20,000
+Ký tự đầu tiên không được phép là để số. Sau đó
+mình sẽ chạy cái lệnh docker-compose up -d này.
 
 13
-00:03:35,000 --> 00:03:50,000
-Password l� "admin123" nh? ?� c?u h�nh trong file
-YAML. Khi k?t n?i th�nh c�ng, b?n s? th?y Database
-"compliancedb".
+00:04:20,000 --> 00:04:40,000
+Nó sẽ kéo toàn bộ dữ liệu về trong cái Docker của
+mình. Và bắt đầu mình bấm Start thì nó mới chạy.
 
 14
-00:03:50,000 --> 00:04:05,000
-M�nh d�ng Docker ?? c� th? thay ??i m�i tr??ng d?
-d�ng.
+00:04:40,000 --> 00:05:00,000
+Đó là công đoạn đầu tiên của mình là cái Docker
+của mình. Tiếp theo là mình tải cái pgAdmin 4 này
+về mình cài đặt.
 
 15
-00:04:05,000 --> 00:04:20,000
-B�y gi? m�nh s? th?c hi?n t?o b?ng. M�nh d�ng l?nh
-SQL ?? Insert d? li?u m?u.
+00:05:00,000 --> 00:05:20,000
+Rồi sau đó mình chuột phải trong server. Nhấn
+Register, nhấn Server. Và đặt cái tên của server
+trong thẻ này.
 
 16
-00:04:20,000 --> 00:04:35,000
-N?u hi?n th�ng b�o "Query returned successfully"
-l� th�nh c�ng. File n�y m�nh l?u l� "init.sql"
-trong th? m?c "dbinit".
+00:05:20,000 --> 00:05:40,000
+Rồi nhấn vô cái name này. Cái connection này ứng
+với lại cái thông tin trong YAML hồi nãy.
 
 17
-00:04:35,000 --> 00:04:55,000
-Ki?m tra d? li?u, ch�ng ta c� 3 b?ng:
-1. Users: Qu?n l� ng??i d�ng
-2. Documents: Cho ph�p ng??i d�ng t?i l�n h?p ??ng
+00:05:40,000 --> 00:06:00,000
+Cái hostname address này mình sẽ đặt là localhost.
+Cái username này mình sẽ đặt là admin. Và cái
+password này là admin123.
 
 18
-00:04:55,000 --> 00:05:10,000
-3. Reports: L?u tr? b�o c�o ?? ng??i d�ng t?i v?.
+00:06:00,000 --> 00:06:20,000
+Nhấn Save để kết nối. Cuối cùng là mở cái database
+này ra. Nó sẽ có database tên là compliancedb.
 
 19
-00:05:10,000 --> 00:05:25,000
-Sau khi c� Database, m�nh chuy?n sang .NET 9 Core
-API. V�o th? m?c Backend, ch?y l?nh:
+00:06:20,000 --> 00:06:40,000
+Ứng với lại cái hồi nãy mình cài đặt nè. Đây là
+cái compliancedb của mình. Compliancedb của mình
+là cái mình đã cài đặt.
 
 20
-00:05:25,000 --> 00:05:40,000
-"dotnet new webapi -n ComplianceApi". Ti?p theo,
-m�nh c�i ??t 2 NuGet Packages.
+00:06:40,000 --> 00:07:00,000
+Bằng cái docker của mình. Thì lúc mở server ra thì
+mình sẽ kết nối cái db đó trong cái docker.
 
 21
-00:05:40,000 --> 00:05:55,000
-"Npgsql.EntityFrameworkCore.PostgreSQL" v�
-"Microsoft.EntityFrameworkCore.Design".
+00:07:00,000 --> 00:07:20,000
+Mà lý do đó chính là mình có thể thay đổi được môi
+trường trên docker một cách dễ dàng.
 
 22
-00:05:55,000 --> 00:06:15,000
-B??c 1.4: ??nh ngh?a Model v� DbContext. T?o
-folder "Models" v� "Data". T?o file "Document.cs"
-trong Models.
+00:07:20,000 --> 00:07:40,000
+Hiện tại thì mình chưa có cái bảng nào. Cho nên là
+mình sẽ đi thực hiện tạo bảng.
 
 23
-00:06:15,000 --> 00:06:30,000
-V� "ApplicationDbContext.cs" trong Data. Trong
-file "appsettings.json", th�m chu?i k?t n?i.
+00:07:40,000 --> 00:08:00,000
+Đây là nơi để chép cái dữ liệu của mình. Rồi mình
+đã insert thành dữ liệu của mình.
 
 24
-00:06:30,000 --> 00:06:45,000
-Connection String t?i PostgreSQL v?i Port 5432,
-Database l� "compliancedb", user "admin" v� pass
-"admin123".
+00:08:00,000 --> 00:08:20,000
+Thì nó sẽ ra cái dạng insert 01. Vậy câu thông báo
+là Query returned successfully in 65 milliseconds.
 
 25
-00:06:45,000 --> 00:07:00,000
-Ti?p theo, ??ng k� Connection String trong file
-"Program.cs". D�ng "builder.Services.AddDbContext"
+00:08:20,000 --> 00:08:40,000
+Rồi đó là cái file của mình. Bây giờ mình sẽ lưu
+cái file này lại là init.sql trong thư mục dbinit.
 
 26
-00:07:00,000 --> 00:07:15,000
-?? t�ch h?p ApplicationDbContext ?� t?o v?i 3
-b?ng: Reports, Documents, v� Users.
+00:08:40,000 --> 00:09:00,000
+Bây giờ mình sẽ kiểm tra dữ liệu trong cái file
+này. Rồi mình có 3 bảng nè.
 
 27
-00:07:15,000 --> 00:07:35,000
-B??c 3: Th?c hi?n l?nh Migration ??u ti�n. M?
-Terminal trong Backend v� ch?y:
-"dotnet ef migrations add InitialCreate"
+00:09:00,000 --> 00:09:20,000
+Mình có 3 cái bảng này. Mình dữ liệu có 3 bảng:
+Mình sẽ có bảng Users, bảng Documents, với bảng
+Reports.
 
 28
-00:07:35,000 --> 00:07:50,000
-Sau ?� ch?y: "dotnet ef database update". N?u ch?a
-c� c�ng c? EF, h�y ch?y l?nh:
+00:09:20,000 --> 00:09:40,000
+Bảng Users này có tác dụng là cho phép đăng ký
+người dùng sử dụng dịch vụ của mình.
 
 29
-00:07:50,000 --> 00:08:05,000
-"dotnet tool install --global dotnet-ef". L?u �
-n?u d�ng .NET 9 m� g?p l?i th? vi?n.
+00:09:40,000 --> 00:10:00,000
+Còn cái bảng Documents này cho phép người dùng tải
+lên tài liệu của mình, hợp đồng.
 
 30
-00:08:05,000 --> 00:08:20,000
-C� th? h? version c�c package xu?ng 8.0.2 ?? ?n
-??nh.
+00:10:00,000 --> 00:10:20,000
+Còn cái bảng Reports này cho phép người dùng tải
+về báo cáo. Mình sẽ sinh ra dữ liệu báo cáo cho
+phép người ta tải báo cáo đó về.
 
 31
-00:08:20,000 --> 00:08:40,000
-Ti?p theo, ??nh ngh?a c�c l?p Document v� Report.
-?�y l� c�c l?p ??i di?n cho d? li?u ?? t??ng t�c
-gi?a giao di?n v� Database.
+00:10:20,000 --> 00:10:40,000
+Sau khi mình có database rồi mình sang .NET 9 Core
+API. Mình sẽ đi vào cái thư mục backend của mình.
 
 32
-00:08:40,000 --> 00:09:00,000
-L?p Report c� ID, DocumentId, Score, Status v�
-Result (ki?u JSON). L?p Document c� ID, UserId,
-FileName, FilePath, Status v� UploadedAt.
+00:10:40,000 --> 00:11:00,000
+Thư mục backend của mình. Và mình sẽ chạy một cái
+lệnh là: dotnet new webapi -n ComplianceApi.
 
 33
-00:09:00,000 --> 00:09:20,000
-L?u � v? v?n ?? "Nullable" trong C#, c�c ki?u
-string n�n ???c kh?i t?o l� "string.Empty" ho?c ""
-?? tr�nh c?nh b�o l?i CS8618.
+00:11:00,000 --> 00:11:20,000
+Để tạo ra thư mục riêng của mình. Tạo ra một cái
+project này. ComplianceApi.
 
 34
-00:09:20,000 --> 00:09:35,000
-B�y gi? ch�ng ta ch?y th?. ??m b?o Docker Desktop
-?� b?t v� Container ?ang ch?y ? c?ng 5432.
+00:11:20,000 --> 00:11:40,000
+Nó sẽ tạo ra cái project này cho mình. Và tiếp tục
+mình ghi chú này. Mình chạy tiếp để mình thêm 2
+cái package.
 
 35
-00:09:35,000 --> 00:09:50,000
-Trong "appsettings.json", m�nh ?? Password tr?c
-ti?p ?? demo nhanh.
+00:11:40,000 --> 00:12:00,000
+Một là Npgsql.EntityFrameworkCore.PostgreSQL. Hai
+là Microsoft.EntityFrameworkCore.Design.
 
 36
-00:09:50,000 --> 00:10:10,000
-M�nh d�ng pgAdmin 4 ?? ki?m tra c�c Table. ??
-tr�nh xung ??t khi Migration, m�nh x�a c�c b?ng c?
-t?o th? c�ng.
+00:12:00,000 --> 00:12:20,000
+Copy 2 cái lệnh này bỏ vô. Rồi. Tiếp theo là đi
+qua bước 1.4: Định nghĩa Model và DbContext.
 
 37
-00:10:10,000 --> 00:10:25,000
-?? EF Core t? t?o l?i t? ??u. Khi ch?y l?nh
-Update, h? th?ng s? y�u c?u password "admin123".
+00:12:20,000 --> 00:12:40,000
+Đi vào trong đây mình sẽ tạo một cái folder tên là
+Models. Và một folder tên là Data.
 
 38
-00:10:25,000 --> 00:10:40,000
-N?u th?y b?ng "__EFMigrationsHistory" xu?t hi?n l�
-b?n ?� l�m ?�ng.
+00:12:40,000 --> 00:13:00,000
+Và 2 file Document.cs trong Models. Và file
+ApplicationDbContext.cs trong file Data.
 
 39
-00:10:40,000 --> 00:11:00,000
-Ti?p theo, m? Controller "UploadController". ??
-upload ???c file, m�nh c?n m?t User m?c ??nh ??
-v??t qua r�ng bu?c Kh�a ngo?i.
+00:13:00,000 --> 00:13:20,000
+Tiếp theo trong cái thư mục của mình sẽ tạo ra một
+file appsettings.json để mình thêm chuỗi kết nối
+tới PostgreSQL.
 
 40
-00:11:00,000 --> 00:11:20,000
-M�nh d�ng SQL Insert m?t User m?u v?i ID l�
-"00000000-0000-0000-0000-000000000000".
+00:13:20,000 --> 00:13:40,000
+Rồi mình mở Visual Studio lên để mình mở cái
+project. Rồi tiếp theo mình sẽ tạo cái default
+connection.
 
 41
-00:11:20,000 --> 00:11:40,000
-Th? nghi?m API qua Swagger: N?u t?i l�n file ?nh
-(JPG, PNG), h? th?ng s? b�o l?i v� m�nh ?� code
-ch?n ch? nh?n file t�i li?u.
+00:13:40,000 --> 00:14:00,000
+Cho cái cổng 5432 trong cái db compliancedb của
+mình. Mình phải để ra cái password của mình là
+admin123.
 
 42
-00:11:40,000 --> 00:12:00,000
-N?u t?i l�n file PDF ho?c Text, h? th?ng b�o th�nh
-c�ng.
+00:14:00,000 --> 00:14:20,000
+Và username là admin. Giống như hồi nãy mình cài
+trong file YAML. Rồi sau đó mình save lại.
 
 43
-00:12:00,000 --> 00:12:20,000
-Ki?m tra trong th? m?c "InternalStorage/Documents",
-file ?� ???c l?u v?t l� t?i ?�.
+00:14:20,000 --> 00:14:40,000
+Rồi tiếp theo mình đăng ký connection vô trong
+file Program.cs. Để mình đăng ký.
 
 44
-00:12:20,000 --> 00:12:40,000
-Ki?m tra trong pgAdmin 4, chu?t ph?i v�o b?ng
-Documents -> View/Edit Data -> All Rows.
+00:14:40,000 --> 00:15:00,000
+Rồi mình dùng builder để mình lấy cái dịch vụ. Để
+mình add cái DbContext của mình vô.
 
 45
-00:12:40,000 --> 00:13:00,000
-B?n s? th?y d�ng d? li?u m?i v?i tr?ng th�i l�
-"Pending" v� ???ng d?n FilePath ch�nh x�c.
+00:15:00,000 --> 00:15:20,000
+Cái DbContext này là cái hồi nãy mình đã tạo ở
+phía trên đây nè. Đó là cái file này
+ApplicationDbContext.
 
 46
-00:13:00,000 --> 00:13:20,000
-Cu?i c�ng, ?? m? ???c Swagger, trong "Program.cs"
-m�nh c?u h�nh: AddEndpointsApiExplorer v�
-AddSwaggerGen.
+00:15:20,000 --> 00:15:40,000
+Thì mình chép cái file này vào trong cái
+ApplicationDbContext để mình có 3 bảng vừa tạo
+nha: Reports, Documents và Users.
 
 47
-00:13:20,000 --> 00:13:40,000
-Trong Middleware, c?u h�nh app.UseSwagger() v�
-app.UseSwaggerUI() ch? ch?y trong m�i tr??ng
-Development.
+00:15:40,000 --> 00:16:00,000
+Rồi. Sau khi đã có 2 cái lệnh này rồi thì mình sẽ
+đi tiến hành bước thứ 3 là mình thực thi cái lệnh
+Migration đầu tiên.
 
 48
-00:13:40,000 --> 00:14:00,000
-Trong Controller, m�nh d�ng Attribute
-[ApiController] v� [Route("api/[controller]")].
+00:16:00,000 --> 00:16:20,000
+Để nó tạo cái dữ liệu vào trong cái file đối tượng
+Document, Report và User của mình vào trong cái
+project Backend của mình.
 
 49
-00:14:00,000 --> 00:14:20,000
-Ph??ng th?c "UploadLocal" s? d?ng HTTP POST, nh?n
-tham s? l� "IFormFile". Swagger s? t? ??ng nh?n
-di?n v� hi?n th? n�t "Choose File".
+00:16:20,000 --> 00:16:40,000
+Mình dùng terminal trong hệ thống Backend để mình
+chạy 2 lệnh Migration này.
 
 50
-00:14:20,000 --> 00:14:40,000
-Nh? v?y, ch�ng ta ?� ho�n th�nh Giai ?o?n 1:
-1. Thi?t l?p Workspace
-2. C?u h�nh Docker & PostgreSQL
+00:16:40,000 --> 00:17:00,000
+Lệnh thứ nhất là: dotnet ef migrations add
+InitialCreate. Lệnh thứ 2 là: dotnet ef database
+update.
 
 51
-00:14:40,000 --> 00:15:00,000
-3. X�y d?ng Core Backend v?i .NET 9
-4. Ph�t tri?n t�nh n?ng Upload l?u v�o ? c?ng n?i
-b? v� l?u Metadata v�o Database
+00:17:00,000 --> 00:17:20,000
+Nếu project của các bạn mà chưa có lệnh dotnet ef
+thì mình sẽ chạy công cụ dotnet ef trước.
 
 52
-00:15:00,000 --> 00:15:20,000
-5. X? l� l?i r�ng bu?c Kh�a ngo?i v� ch?n ??nh
-d?ng file kh�ng h?p l?. H? th?ng hi?n ch? nh?n
-file t�i li?u, tr?ng th�i l?u l� Pending.
+00:17:20,000 --> 00:17:40,000
+Bằng cách là: dotnet tool install --global
+dotnet-ef. Mình phải có công cụ này rồi mình kiểm
+tra cái version của nó.
+
+53
+00:17:40,000 --> 00:18:00,000
+Mình sẽ bỏ vô cho nó chạy. Nếu mà bạn sử dụng cái
+.NET 9 mà bị lỗi thì mình sẽ chuyển nó về công cụ
+.NET 8.
+
+54
+00:18:00,000 --> 00:18:20,000
+Mình sẽ bỏ lệnh vô mình chạy dotnet tool version
+8.0.2. Rồi sau đó mình chạy lại 2 cái lệnh
+Migration hồi nãy.
+
+55
+00:18:20,000 --> 00:18:40,000
+Bây giờ mình bắt đầu cài đặt dotnet ef migrations
+add InitialCreate. Khi các bạn cài cái mà thiếu
+thư viện NuGet.
+
+56
+00:18:40,000 --> 00:19:00,000
+Cho cái DbContext thì các bạn phải cài thêm Entity
+Framework Core thì nó mới chạy được.
+
+57
+00:19:00,000 --> 00:19:20,000
+Trong cái này nó sẽ có cái Design, PostgreSQL. Rồi
+mình sẽ bỏ vô mình chạy thử. Sau đó mình sẽ cài
+xong rồi.
+
+58
+00:19:20,000 --> 00:19:40,000
+Đầu tiên là mình sẽ cài gói Entity Framework Core.
+Tiếp theo là mình sẽ cài gói Design. Rồi cuối cùng
+là cài gói PostgreSQL.
+
+59
+00:19:40,000 --> 00:20:00,000
+Rồi mình quay lại file ApplicationDbContext. Rồi
+mình sửa lại. Rồi xong ha. Mình cài đặt xong rồi.
+
+60
+00:20:00,000 --> 00:20:20,000
+Mình lưu cái file ApplicationDbContext lại. Giờ
+mình build lại nè. Hiện tại mấy cái gói này nó
+không chịu với lại cái .NET 9.
+
+61
+00:20:20,000 --> 00:20:40,000
+Mình phải cài lại cái gói mới thôi. Mình thay đổi
+version của mấy cái gói lại ha 8.0.2.
+
+62
+00:20:40,000 --> 00:21:00,000
+Rồi ok ha. Nó chạy hết lỗi rồi nè. Rồi xong mấy
+cái gói này ok rồi. Rồi mình sẽ xài version 8.0.2.
+
+63
+00:21:00,000 --> 00:21:20,000
+.NET 9 mình xài cái gói 8.0.2 là hợp lý ha. Mình
+sẽ tạo thêm 2 cái bộ đồ nữa là Document và Report
+cho nó ứng với DbContext của mình.
+
+64
+00:21:20,000 --> 00:21:40,000
+Mình sẽ tạo thêm 2 cái Document này với cái Report
+này. Mình sẽ tạo 2 cái lớp này nè.
+
+65
+00:21:40,000 --> 00:22:00,000
+2 cái lớp này nó là đại diện cho 1 dòng dữ liệu để
+mình khi mà trên giao diện nhập thì nó sẽ dùng cái
+này để nó tương tác với lại cái giao diện đó.
+
+66
+00:22:00,000 --> 00:22:20,000
+Và nó sẽ chuyển cái thông tin thông qua cái lớp
+này. Và nó sẽ chuyển xuống dưới database thành 1
+dòng dữ liệu.
+
+67
+00:22:20,000 --> 00:22:40,000
+Rồi lớp Report của mình nó sẽ có ID, kết với lại
+cái DocumentId, số điểm phải có, trạng thái.
+
+68
+00:22:40,000 --> 00:23:00,000
+Cái kết quả này, cái JSON trả về. Còn cái Document
+của mình cũng có ID nè. Cái User mà tài khoản
+người ta upload.
+
+69
+00:23:00,000 --> 00:23:20,000
+Tên của cái tài liệu, đường dẫn, trạng thái. Và
+thời điểm người ta upload. Rồi mình sẽ build lại
+nha.
+
+70
+00:23:20,000 --> 00:23:40,000
+Hiện tại thì cái vấn đề nghiêm ngặt trong C# nó
+được tăng lên nhiều lần. Nếu như mình không có để
+nullable.
+
+71
+00:23:40,000 --> 00:24:00,000
+Nó sẽ bắt đầu hỏi mình. Mấy cái này mình sẽ để mấy
+cái trạng thái kiểu string này là nullable hết
+luôn.
+
+72
+00:24:00,000 --> 00:24:20,000
+Cài thêm cái gói Npgsql vô nữa cho cái PostgreSQL
+này nó ở version 8.0.2.
+
+73
+00:24:20,000 --> 00:24:30,000
+Có .NET package Npgsql.EntityFrameworkCore
+.PostgreSQL version 8.0.2.
+
+74
+00:24:30,000 --> 00:24:50,000
+Rồi trong cái file Program.cs, thêm cái Entity
+Framework Core. Rồi xong mình build xong rồi.
+
+75
+00:24:50,000 --> 00:25:10,000
+Còn 2 cái warning nữa CS8618. CS8618 này là kiểu
+string, cho nó về nullable hết luôn.
+
+76
+00:25:10,000 --> 00:25:30,000
+Cho nó về kiểu string hết luôn. Cho nó bớt lỗi.
+Xong mình build xong là hết lỗi.
+
+77
+00:25:30,000 --> 00:25:50,000
+Giờ mình bắt đầu thử. Có nghĩa là thứ tự đặt cái
+code của mình sai. Hồi nãy mình đặt cái phần
+builder này.
+
+78
+00:25:50,000 --> 00:26:10,000
+Phần builder này ở dưới app. Nhưng mà thật sự cái
+builder này mình build được. Rồi mình build lại.
+
+79
+00:26:10,000 --> 00:26:30,000
+Cập nhật lại cái database của mình. Database không
+có mở. Mở cổng kết nối.
+
+80
+00:26:30,000 --> 00:26:50,000
+Giờ mình mở cổng kết nối lên để cập database của
+mình. Docker của mình chưa có bật lên.
+
+81
+00:26:50,000 --> 00:27:10,000
+Làm gì có ở đâu cũng chạy. Giờ mình mở cái
+container lên. Mình chạy được cái cổng đó.
+
+82
+00:27:10,000 --> 00:27:30,000
+Cổng 5432. Mình vô trong container. Mình chọn vô
+cái nút start đây.
+
+83
+00:27:30,000 --> 00:27:50,000
+Là mình sẽ chạy được cái container Compliance
+System của mình. Chạy trên cổng 5432.
+
+84
+00:27:50,000 --> 00:28:10,000
+Không cần mở database ra cũng được. Chỉ cần chạy
+Docker là được. Trong appsettings của mình.
+
+85
+00:28:10,000 --> 00:28:30,000
+Nó có cái chuỗi kết nối vô database rồi. Tại mình
+đang làm ứng dụng nhanh để demo.
+
+86
+00:28:30,000 --> 00:28:50,000
+Cho nên là mình để thẳng cái password lên trên này
+luôn chứ không phải giấu đi.
+
+87
+00:28:50,000 --> 00:29:10,000
+Rồi mình chỉnh lại cái database update của mình.
+Hồi nãy mình có cái bước kiểm tra trong database.
+
+88
+00:29:10,000 --> 00:29:30,000
+Là mình xài cái pgAdmin 4 để mình biết các table
+trong database.
+
+89
+00:29:30,000 --> 00:29:50,000
+Bây giờ mình phải xóa mấy cái đó đi. Để mình dùng
+lệnh migrate này trực tiếp tạo ra trong.
+
+90
+00:29:50,000 --> 00:30:10,000
+Đỡ phiền phức hơn là mình dùng lệnh thủ công. Để
+cho migration nó không có cố tạo lại lần nữa.
+
+91
+00:30:10,000 --> 00:30:30,000
+Đó là mình demo. Cái migrate cũ đi. Rồi mình add 1
+cái mới vô. Nhưng mà mình không có thay đổi gì
+hết.
+
+92
+00:30:30,000 --> 00:30:50,000
+Xong mình cập nhật lại là xong. Nhưng tốt hơn hết
+là giống như mình đi học hồi xưa.
+
+93
+00:30:50,000 --> 00:31:10,000
+Là mình có việc gì là mình xóa đi. Mình tạo lại
+thôi là được. Tại mình chỉ test trong cái giai
+đoạn này thôi.
+
+94
+00:31:10,000 --> 00:31:30,000
+Nó không có dữ liệu gì hết. Để mình kiểm tra coi
+cái lệnh này nó có chạy được.
+
+95
+00:31:30,000 --> 00:31:50,000
+Đúng rồi, mình đăng nhập lại. Thì nó sẽ hỏi
+password. Thì mình cứ gõ đúng cái password mà mình
+đã tạo.
+
+96
+00:31:50,000 --> 00:32:10,000
+Là admin123. Giống như trong YAML. Mình viết sau
+mình đăng nhập.
+
+97
+00:32:10,000 --> 00:32:30,000
+Đúng rồi ha. Nó sẽ thấy 1 cái bảng
+__EFMigrationsHistory cho mình.
+
+98
+00:32:30,000 --> 00:32:50,000
+Cái bảng này nó sẽ mỗi lần mình migrate cái gì đó.
+Mình tích hợp nha. Thì nó sẽ đưa vô trong cái bảng
+này.
+
+99
+00:32:50,000 --> 00:33:10,000
+Đó là mình đang tạo đúng rồi. Rồi trong cái khoảng
+thời gian vừa rồi.
+
+100
+00:33:10,000 --> 00:33:30,000
+Mình đã tạo xong 1 cái Migrate database. Các bạn
+mở Docker lại. Cái project Compliance System này.
+
+101
+00:33:30,000 --> 00:33:50,000
+Mở cái container này lên. Rồi sau đó mình mở cái
+database lên trong cái pgAdmin 4.
+
+102
+00:33:50,000 --> 00:34:10,000
+Mục tiêu là mình sẽ kiểm tra lại cái luồng dữ liệu
+khi mà mình chạy cái project này.
+
+103
+00:34:10,000 --> 00:34:30,000
+Mình sẽ gọi API của Controller upload. Để mình coi
+nó có tạo 1 cái file trong thư mục InternalStorage.
+
+104
+00:34:30,000 --> 00:34:50,000
+Mà nó có load dữ liệu hay không. Cái dòng dữ liệu
+đó là đường dẫn của cái file được upload lên.
+
+105
+00:34:50,000 --> 00:35:10,000
+Để mà nó upload lên được thì mình cũng phải là 1
+cái user ha. Thì mình mới upload lên được.
+
+106
+00:35:10,000 --> 00:35:30,000
+Để sử dụng chức năng này thì mình tạo ra 1 cái
+user mới là mặc định để mình vượt qua được.
+
+107
+00:35:30,000 --> 00:35:50,000
+Cái khó ngại của nó để đảm bảo tính toàn vẹn dữ
+liệu cho cái demo này.
+
+108
+00:35:50,000 --> 00:36:10,000
+Rồi mình mở 1 cái Query lên để mình insert 1 cái
+tài khoản vô ha.
+
+109
+00:36:10,000 --> 00:36:30,000
+Mình insert thành công 1 cái User mặc định ha. Số
+lượng code của mình là ID, Full name, Email,
+Password.
+
+110
+00:36:30,000 --> 00:36:50,000
+Created và Realtime. Mình đi sửa lại trong code là
+mình sẽ thêm 1 cái user mặc định là ID này.
+
+111
+00:36:50,000 --> 00:37:10,000
+Để nó vượt qua được cái ràng buộc về toàn vẹn dữ
+liệu. Rồi mình sẽ thấy ở đoạn này nè.
+
+112
+00:37:10,000 --> 00:37:30,000
+Tài liệu của mình được gửi lên bởi 1 User ID là
+000. Mình sẽ lấy ID này. Rồi mình chép lại ha.
+
+113
+00:37:30,000 --> 00:37:50,000
+Đầu tiên là mình phải thử vô cái lỗi sai trước.
+Không có tải lên được 1 cái file hình.
+
+114
+00:37:50,000 --> 00:38:10,000
+Đây là file hình JPG. Nó cho tải lên luôn nè. Rồi
+tiếp theo là mình sẽ tải tiếp 1 file PDF.
+
+115
+00:38:10,000 --> 00:38:30,000
+Nó cũng cho tải lên luôn nè. File PDF của mình. Ở
+đây mình sẽ lưu vào đường dẫn InternalStorage.
+
+116
+00:38:30,000 --> 00:38:50,000
+Bây giờ mình đi vô trong cái InternalStorage
+Documents của mình. Đây ha, đó là cái file này.
+
+117
+00:38:50,000 --> 00:39:10,000
+File hình của mình. Mấy cái file hình này cơ chế
+tải lên thì vẫn tải.
+
+118
+00:39:10,000 --> 00:39:30,000
+Nhưng mà nó không có... Vẫn tải thành công nhưng
+mà nó vẫn sẽ bị báo lỗi nếu mình không có cài đặt
+đúng rồi.
+
+119
+00:39:30,000 --> 00:39:50,000
+Rồi mình sẽ demo cái chặn file hình luôn đi ha. Chứ
+API này cũng tốn công làm à. Mình sẽ bỏ bật luôn.
+
+120
+00:39:50,000 --> 00:40:10,000
+Đây là danh sách hình của mình nè: JPG, JPEG, PNG,
+GIF, SVG, WEBP, ICO gì đó. Để vô đây hết rồi.
+
+121
+00:40:10,000 --> 00:40:30,000
+Sau đó mình kiểm tra sau khi người ta có cái file
+đó. Thì mình kiểm tra luôn định dạng cái file.
+
+122
+00:40:30,000 --> 00:40:50,000
+Và nó chỉ chấp nhận cái file tài liệu thôi. Mấy
+cái này là dòng dữ liệu mình không có xóa được.
+
+123
+00:40:50,000 --> 00:41:10,000
+Để kiểm tra dữ liệu trong đây nè. Để coi được dữ
+liệu trong một cái table.
+
+124
+00:41:10,000 --> 00:41:30,000
+Mình sẽ vào trong cái database của mình. Mình sẽ
+mở cái Compliance CTP này ra.
+
+125
+00:41:30,000 --> 00:41:50,000
+Mở Schemas. Mở Public. Mở Tables. Đây nè, đây là
+cái public của mình thấy không.
+
+126
+00:41:50,000 --> 00:42:10,000
+Mình sẽ mở public này ra. Trong cái public này là
+được bao bởi schemas.
+
+127
+00:42:10,000 --> 00:42:30,000
+Schemas này có cái public nè. Nó có cái tables này
+và nó có 3 bảng thấy không.
+
+128
+00:42:30,000 --> 00:42:50,000
+Thì bây giờ mình sẽ chuột phải vô View/Edit Data,
+All Rows. Thì nó sẽ ra cái lệnh này.
+
+129
+00:43:10,000 --> 00:43:30,000
+Hoặc là dùng cái lệnh SELECT * FROM public.documents
+trong dấu nháy kép là nó sẽ ra 3 dòng dữ liệu này.
+
+130
+00:43:30,000 --> 00:43:50,000
+Như cái đường dẫn là mình đang upload thành công 3
+cái nè. Nó có cái trạng thái Pending.
+
+131
+00:44:10,000 --> 00:44:30,000
+Là mình upload hồi nãy 2 cái file upload 2 lần
+bằng cái Swagger thì nó có trạng thái Pending này.
+
+132
+00:44:30,000 --> 00:44:50,000
+Đúng rồi, ví dụ làm lại nè. Mình chặn dữ liệu rồi
+đó. Nãy mình chặn dữ liệu rồi đúng không.
+
+133
+00:44:50,000 --> 00:45:10,000
+Mình đã chặn được dữ liệu rồi nè. Bây giờ mình sẽ
+đi coi lại nó phải bắt buộc nó không được phép tải
+lên một cái hình.
+
+134
+00:45:10,000 --> 00:45:30,000
+Ví dụ hình này. Đúng rồi. File hình ảnh không được
+phép tải lên là đúng rồi.
+
+135
+00:45:30,000 --> 00:45:50,000
+Chỉ chấp nhận file tài liệu thôi là xong rồi. Mình
+sẽ tải 1 file text lên. Đây là file text này.
+
+136
+00:45:50,000 --> 00:46:10,000
+Rồi đó mình tải lên thành công. Đó là file PDF.
+Rồi mình coi dữ liệu trong này.
+
+137
+00:46:10,000 --> 00:46:30,000
+Nó sẽ ra thêm 1 dòng dữ liệu mới nè. Nó sẽ ra 1
+dòng dữ liệu mới nè. Cái file này nó tên là
+sysadv.pdf.
+
+138
+00:46:30,000 --> 00:47:10,000
+sysadv.pdf nè đúng ha. Rồi mình đã làm xong được
+cái giai đoạn 1 của toàn bộ cái series làm ứng
+dụng nè.
+
+139
+00:47:10,000 --> 00:47:30,000
+Để ý này mình cần phải mở được cái Swagger lên
+trong cái file Program.cs của mình.
+
+140
+00:47:30,000 --> 00:48:10,000
+Mình sẽ cài đặt Swagger như sau. Đầu tiên là mình
+phải cấu hình cái Swagger của mình.
+
+141
+00:48:10,000 --> 00:48:30,000
+Đây là đoạn cấu hình Swagger. Trong đó mình sẽ
+quét toàn bộ endpoint của mình bằng lệnh
+AddEndpointsApiExplorer.
+
+142
+00:48:30,000 --> 00:49:10,000
+Tiếp theo là mình sẽ tạo 1 cái cấu hình, 1 cái
+công cụ sinh ra cái file OpenAPI specification.
+
+143
+00:49:10,000 --> 00:49:30,000
+Đây là cái file JSON mô tả API đó. Đây là cái file
+này mình sẽ mô tả nội dung chính của API rồi.
+
+144
+00:49:30,000 --> 00:50:10,000
+Tiếp theo là mình sẽ đi qua bước số 2 là kích hoạt
+cái Swagger Middleware Runtime.
+
+145
+00:50:10,000 --> 00:50:30,000
+Swagger Middleware Runtime là phần cài đặt nè. Có
+chạy trong cái nó có 4 bước.
+
+146
+00:50:30,000 --> 00:50:50,000
+Thứ nhất là chỉ chạy trong môi trường Development
+là dòng này nè. Dòng if Development này.
+
+147
+00:50:50,000 --> 00:51:10,000
+Nó sẽ chạy trong môi trường Development nè. Tiếp
+theo là UseSwagger là mình sẽ tạo cái endpoint đó.
+
+148
+00:51:10,000 --> 00:51:30,000
+Tạo cái endpoint JSON dùng chứa API specification.
+Tiếp theo là lệnh SwaggerUI là mình sẽ tạo cái
+giao diện.
+
+149
+00:51:30,000 --> 00:52:10,000
+Và cuối cùng là mình sẽ chạy sử dụng RoutePrefix
+để mình mở Swagger UI tại cái đường dẫn localhost
+như đó.
+
+150
+00:52:10,000 --> 00:52:30,000
+Rồi xong bây giờ mình chạy lên nè. Đối với trong
+file controller của mình á.
+
+151
+00:52:30,000 --> 00:53:10,000
+Nếu mà nó chạy vô mà nó gặp cái luồng dữ liệu á.
+Mà nó khó là nó phát hiện ra cái API của mình như
+thế nào á.
+
+152
+00:53:10,000 --> 00:53:30,000
+Mình sẽ giải thích nè. Đầu tiên là nó sẽ đánh dấu
+đây là một cái API Controller. Nó sẽ chạy vô, nó
+nhìn thấy ApiController.
+
+153
+00:53:30,000 --> 00:54:10,000
+Nó sẽ biết nè. Tiếp theo là nó sẽ biết cái route
+của mình. Cái route phân biệt giữa 2 cái API nào
+với API nào với nhau.
+
+154
+00:54:10,000 --> 00:54:30,000
+Là dựa vào cái hàng này là UploadController là
+api/Upload. Controller là nó sẽ hiểu là api/Upload
+rồi.
+
+155
+00:54:30,000 --> 00:55:10,000
+Tiếp theo nữa là upload cái phương thức. Cái
+phương thức của mình á là nó sẽ cái endpoint của
+mình upload-local.
+
+156
+00:55:10,000 --> 00:55:30,000
+Nó sẽ nhận biết được đây là cái gì, 7 cái HTTP
+POST là phương thức này. Nó sẽ nhận biết nó là 1
+cái endpoint.
+
+157
+00:55:30,000 --> 00:56:10,000
+Ở trong đó trong cái endpoint này, nó mới đọc cái
+Swagger nó mới đọc dữ liệu là phương thức method
+là UploadLocal.
+
+158
+00:56:10,000 --> 00:56:30,000
+Parameter truyền vào, nó là 1 cái IFormFile, nó
+hiển thị trên UI, hiển thị cái file upload file
+lên cái UI trên Swagger đó.
+
+159
+00:56:30,000 --> 00:57:10,000
+Khi mà mình nhấn Execute ha, mình Try It Out nó sẽ
+hiển thị ra 1 cái chỗ để mình upload cái file đó
+lên.
+
+160
+00:57:10,000 --> 00:57:30,000
+Rồi tiếp theo là nó sẽ trả về kiểu dữ liệu là
+IActionResult. Đây là IActionResult.
+
+161
+00:57:30,000 --> 00:58:10,000
+Cái Task này nó sẽ bất đồng bộ ha. Nó sẽ đồng bộ
+có nghĩa là sao. Swagger nó sẽ tự động đọc cái
+attribute HttpPost và Route.
+
+162
+00:58:10,000 --> 00:58:30,000
+Và nó phát hiện được là của mình là IFormFile là 1
+cái file upload. Nó sẽ đọc ra cái UI tương ứng với
+cái nút Choose File.
+
+163
+00:58:30,000 --> 00:59:10,000
+Và mình xem kết quả nè. Mình sẽ chạy cái file này
+lên và xem kết quả. Nó sẽ ra được nội dung.
+
+164
+00:59:10,000 --> 00:59:30,000
+Đây là 1 cái endpoint của mình là upload-local. Nó
+sẽ có 1 cái phần upload nè.
+
+165
+00:59:30,000 --> 01:00:10,000
+Try it out là nó sẽ hiển thị ra phần IFormFile. Nó
+sẽ hiển thị cái nút chọn file cho mình đó.
+
+166
+01:00:10,000 --> 01:00:30,000
+Mình sẽ chọn 1 cái file này. Cái file này nó chỉ
+chấp nhận tài liệu thôi nha. Mình đang test cái
+đường nó sai ha.
+
+167
+01:00:30,000 --> 01:00:50,000
+Rồi xong mình Execute nó sẽ sai nè. Nó sẽ không
+upload lên được đó. Nó sẽ nhảy ra lỗi.
+
+168
+01:00:50,000 --> 01:01:10,000
+Bây giờ mình sẽ upload lại nè. Mình sẽ thử 1 cái
+file khác. Mình sẽ thử 1 cái file hóa đơn này nè.
+File PDF.
+
+169
+01:01:10,000 --> 01:01:30,000
+Và nội dung của cấu trúc giai đoạn 1 này là mình
+đã đi thiết lập dự án của mình.
+
+170
+01:01:30,000 --> 01:01:50,000
+Bao gồm có tổ chức cái workspace root Compliance
+System. Nó chứa toàn bộ giải pháp và cái .NET
+project của mình.
+
+171
+01:01:50,000 --> 01:02:10,000
+Sử dụng cái .NET 9 á. Rồi mình thiết lập cái thư
+mục để chứa cái file của mình InternalStorage
+Documents.
+
+172
+01:02:10,000 --> 01:02:30,000
+Để lưu trữ tập tin nội bộ đảm bảo tính bảo mật.
+Rồi công việc thứ 2 là mình đi cơ sở dữ liệu ha.
+
+173
+01:02:30,000 --> 01:02:50,000
+Cái cơ sở dữ liệu của mình nó sẽ chạy trên cái
+Docker để mở cái cổng 5432 ra.
+
+174
+01:02:50,000 --> 01:03:10,000
+Để dữ liệu của mình nó không bị mất với cái việc
+mình cài đặt container thông qua cái file YAML.
+
+175
+01:03:10,000 --> 01:03:30,000
+Cái file đó nó sẽ dbinit của mình. Tiếp theo là
+mình vô trong cái appsettings.json.
+
+176
+01:03:30,000 --> 01:03:50,000
+Để mình kết nối Connection String cái ứng dụng của
+mình vào trong cái database là xong cái cơ sở dữ
+liệu.
+
+177
+01:03:50,000 --> 01:04:10,000
+Tiếp theo là xây dựng Core Backend là mình đã đi
+xây dựng cái module của mình. Bao gồm có User.
+
+178
+01:04:10,000 --> 01:04:30,000
+Nó cùng mình và mình làm Report với các thuộc tính
+cần thiết. Hiện tại thì mình chưa có xây dựng cái
+module User.
+
+179
+01:04:30,000 --> 01:04:50,000
+Mình chỉ để có mỗi hạt code là hạt min với cái
+Email đó thôi. Mình không có làm đăng ký đăng nhập.
+
+180
+01:04:50,000 --> 01:05:10,000
+Cho nên mình không có viết thêm cái module User vô
+ha. Trong v0.1 nó chỉ có làm được cái file upload
+lên là hết rồi.
+
+181
+01:05:10,000 --> 01:05:30,000
+Rồi xong, mình thực hiện thi cái công việc
+Migration. Sử dụng Entity Framework Core để ánh xạ
+code C# thành các bảng trong database.
+
+182
+01:05:30,000 --> 01:05:50,000
+Trong cái DbContext của mình thì mình xây dựng cầu
+nối dữ liệu. Cấu hình cái ApplicationDbContext.
+
+183
+01:05:50,000 --> 01:06:10,000
+Cái này không có. Công việc số 4 là mình phát
+triển tính năng Upload.
+
+184
+01:06:10,000 --> 01:06:30,000
+Mình sẽ xây dựng một cái endpoint upload-local.
+Một cái controller là UploadController.
+
+185
+01:06:30,000 --> 01:06:50,000
+Mình sẽ đi kiểm tra tập tin đầu vào không rỗng và
+đúng định dạng. Tiếp theo là mình sẽ lưu vào cái
+InternalStorage.
+
+186
+01:06:50,000 --> 01:07:10,000
+Lưu vào cái ổ cứng vật lý và mình lưu bản ghi vào
+bảng Documents của mình trong PostgreSQL.
+
+187
+01:07:10,000 --> 01:07:30,000
+Để quản lý lại trong database của mình. Mình lưu
+thêm cái thông tin mình vừa mới đẩy cái file lên
+trên cái ổ cứng của mình.
+
+188
+01:07:30,000 --> 01:07:50,000
+Công việc thứ 5 là mình xử lý các vấn đề khi đột
+xuất. Là lỗi khó ngại. Lỗi khó ngại này là.
+
+189
+01:07:50,000 --> 01:08:10,000
+Là mình đảm bảo được tính toàn vẹn dữ liệu bằng
+cách mình Insert data sẵn. Là mình tạo cái User.
+
+190
+01:08:10,000 --> 01:08:30,000
+Xong mình vô trong cái phần code bản cái hàm
+UploadLocal. Thì cái User nào mình lấy cái User
+mặc định mình demo thôi.
+
+191
+01:08:30,000 --> 01:08:50,000
+Còn lệnh SQL schema. Tiếp theo là mình cuối cùng
+là cách đó là mình xong Swagger UI của mình.
+
+192
+01:08:50,000 --> 01:09:10,000
+Nó đạt được mã trả về mã 200 với hệ thống đầy đủ
+là chỉ nhận file tài liệu chứ không nhận file hình.
+
+193
+01:09:10,000 --> 01:09:30,000
+Chứ không nhận file hình. Cái cơ sở dữ liệu của
+mình nó cũng sẽ đã được lưu thông tin tên file và
+đường dẫn đầy đủ.
+
+194
+01:09:30,000 --> 01:09:45,000
+Trạng thái Pending là xong cái dữ liệu cho cái nền
+tảng Backend của mình.
