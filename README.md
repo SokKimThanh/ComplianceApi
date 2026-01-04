@@ -1,130 +1,130 @@
-# ?? Compliance API - H? Th?ng Ki?m Tra Tu�n Th? CCPA v?i AI
+﻿# 🔐 Compliance API - Hệ Thống Kiểm Tra Tuân Thủ CCPA với AI
 
 ![.NET 9](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192?logo=postgresql)
 ![Docker](https://img.shields.io/badge/Docker-Latest-2496ED?logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-> **H? th?ng t? ??ng h�a quy tr�nh ki?m tra tu�n th? CCPA cho h?p ??ng**  
-> Gi?m th?i gian ki?m k� t? **4 ti?ng xu?ng c�n 10 gi�y** nh? AI
+> **Hệ thống tự động hóa quy trình kiểm tra tuân thủ CCPA cho hợp đồng**  
+> Giảm thời gian kiểm kê từ **4 tiếng xuống còn 10 giây** nhờ AI
 
 ---
 
-## ?? M?c L?c
+## 📋 Mục Lục
 
-- [T?ng Quan](#-t?ng-quan)
-- [T�nh N?ng](#-t�nh-n?ng)
-- [Ki?n Tr�c H? Th?ng](#-ki?n-tr�c-h?-th?ng)
-- [C�i ??t](#-c�i-??t)
-- [C?u H�nh](#?-c?u-h�nh)
-- [S? D?ng](#-s?-d?ng)
+- [Tổng Quan](#-tổng-quan)
+- [Tính Năng](#-tính-năng)
+- [Kiến Trúc Hệ Thống](#-kiến-trúc-hệ-thống)
+- [Cài Đặt](#-cài-đặt)
+- [Cấu Hình](#️-cấu-hình)
+- [Sử Dụng](#-sử-dụng)
 - [API Endpoints](#-api-endpoints)
 - [Database Schema](#-database-schema)
 - [Development](#-development)
 - [Roadmap](#-roadmap)
-- [?�ng G�p](#-?�ng-g�p)
+- [Đóng Góp](#-đóng-góp)
 - [License](#-license)
 
 ---
 
-## ?? T?ng Quan
+## 🎯 Tổng Quan
 
-**Compliance API** l� h? th?ng backend ???c x�y d?ng v?i **.NET 9**, t�ch h?p AI ?? t? ??ng ki?m tra t�nh tu�n th? c?a h?p ??ng theo quy tr�nh ki?m so�t **CCPA** (California Consumer Privacy Act).
+**Compliance API** là hệ thống backend được xây dựng với **.NET 9**, tích hợp AI để tự động kiểm tra tính tuân thủ của hợp đồng theo quy trình kiểm soát **CCPA** (California Consumer Privacy Act).
 
-### V?n ?? Gi?i Quy?t
+### Vấn Đề Giải Quyết
 
-- ? **Tr??c:** Lu?t s? m?t 4 ti?ng ?? ??c v� t�m l?i trong h?p ??ng
-- ? **Sau:** AI t? ??ng ph�n t�ch trong 10 gi�y
-- ?? **K?t qu?:** T?ng hi?u su?t 1440x, gi?m chi ph� nh�n c�ng
+- ❌ **Trước:** Luật sư mất 4 tiếng để đọc và tìm lỗi trong hợp đồng
+- ✅ **Sau:** AI tự động phân tích trong 10 giây
+- 🎯 **Kết quả:** Tăng hiệu suất 1440x, giảm chi phí nhân công
 
 ---
 
-## ? T�nh N?ng
+## ✨ Tính Năng
 
-### Giai ?o?n 1 (Ho�n Th�nh) ?
+### Giai Đoạn 1 (Hoàn Thành) ✅
 
-- [x] **Upload T�i Li?u**
+- [x] **Upload Tài Liệu**
   - Upload file PDF, DOCX, TXT, XLSX
-  - Ch?n file h�nh ?nh (JPG, PNG, GIF, SVG, WEBP, ICO, TIFF, HEIC)
-  - L?u tr? v?t l� trong `InternalStorage/Documents`
-  - L?u metadata v�o PostgreSQL
+  - Chặn file hình ảnh (JPG, PNG, GIF, SVG, WEBP, ICO, TIFF, HEIC)
+  - Lưu trữ vật lý trong `InternalStorage/Documents`
+  - Lưu metadata vào PostgreSQL
   
-- [x] **Qu?n L� Database**
-  - 3 b?ng ch�nh: Users, Documents, Reports
+- [x] **Quản Lý Database**
+  - 3 bảng chính: Users, Documents, Reports
   - Entity Framework Core Migration
-  - PostgreSQL tr�n Docker (Port 5432)
+  - PostgreSQL trên Docker (Port 5432)
   
 - [x] **API Documentation**
-  - Swagger UI t�ch h?p
+  - Swagger UI tích hợp
   - OpenAPI specification
-  - T? ??ng sinh t�i li?u API
+  - Tự động sinh tài liệu API
 
-### Giai ?o?n 2 (?ang Ph�t Tri?n) ??
+### Giai Đoạn 2 (Đang Phát Triển) 🚧
 
-- [ ] AI Integration - Ph�n t�ch t�i li?u v?i LLM
+- [ ] AI Integration - Phân tích tài liệu với LLM
 - [ ] JWT Authentication & Authorization
-- [ ] T?o b�o c�o tu�n th? t? ??ng
-- [ ] Export b�o c�o PDF
+- [ ] Tạo báo cáo tuân thủ tự động
+- [ ] Export báo cáo PDF
 
 ---
 
-## ??? Ki?n Tr�c H? Th?ng
+## 🏗️ Kiến Trúc Hệ Thống
 
 ```
-???????????????????????????????????????????????????????
-?                  Client Layer                       ?
-?              (Swagger UI / Frontend)                ?
-???????????????????????????????????????????????????????
-                   ?
-                   ?
-???????????????????????????????????????????????????????
-?              API Layer (.NET 9)                     ?
-?  ????????????????  ????????????????                ?
-?  ?  Controllers ?  ?  Middleware  ?                ?
-?  ????????????????  ????????????????                ?
-???????????????????????????????????????????????????????
-                   ?
-                   ?
-???????????????????????????????????????????????????????
-?            Business Logic Layer                     ?
-?  ????????????????  ????????????????                ?
-?  ?   Services   ?  ?  Validators  ?                ?
-?  ????????????????  ????????????????                ?
-???????????????????????????????????????????????????????
-                   ?
-        ???????????????????????
-        ?                     ?
-?????????????????    ??????????????????????
-?  File Storage ?    ?   PostgreSQL DB    ?
-? InternalStorage?    ?  (Docker Container)?
-?????????????????    ??????????????????????
+┌─────────────────────────────────────────────────────┐
+│                  Client Layer                       │
+│              (Swagger UI / Frontend)                │
+└──────────────────┬──────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────┐
+│              API Layer (.NET 9)                     │
+│  ┌──────────────┐  ┌──────────────┐                │
+│  │  Controllers │  │  Middleware  │                │
+│  └──────────────┘  └──────────────┘                │
+└──────────────────┬──────────────────────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────────────────────┐
+│            Business Logic Layer                     │
+│  ┌──────────────┐  ┌──────────────┐                │
+│  │   Services   │  │  Validators  │                │
+│  └──────────────┘  └──────────────┘                │
+└──────────────────┬──────────────────────────────────┘
+                   │
+        ┌──────────┴──────────┐
+        ▼                     ▼
+┌───────────────┐    ┌────────────────────┐
+│  File Storage │    │   PostgreSQL DB    │
+│ InternalStorage│    │  (Docker Container)│
+└───────────────┘    └────────────────────┘
 ```
 
 ---
 
-## ?? C�i ??t
+## 🚀 Cài Đặt
 
-### Y�u C?u H? Th?ng
+### Yêu Cầu Hệ Thống
 
 - **.NET 9 SDK** - [Download](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Docker Desktop** - [Download](https://www.docker.com/products/docker-desktop)
-- **pgAdmin 4** (T�y ch?n) - [Download](https://www.pgadmin.org/download/)
-- **Visual Studio 2022** ho?c **VS Code**
+- **pgAdmin 4** (Tùy chọn) - [Download](https://www.pgadmin.org/download/)
+- **Visual Studio 2022** hoặc **VS Code**
 
-### B??c 1: Clone Repository
+### Bước 1: Clone Repository
 
 ```bash
 git clone https://github.com/SokKimThanh/ComplianceApi.git
 cd ComplianceApi
 ```
 
-### B??c 2: C�i ??t Docker & PostgreSQL
+### Bước 2: Cài Đặt Docker & PostgreSQL
 
 ```bash
-# Di chuy?n ??n th? m?c ch?a docker-compose.yaml
+# Di chuyển đến thư mục chứa docker-compose.yaml
 cd H:\Blazor\compliance-system
 
-# Kh?i ??ng PostgreSQL container
+# Khởi động PostgreSQL container
 docker-compose up -d
 ```
 
@@ -149,44 +149,44 @@ volumes:
   postgres-data:
 ```
 
-### B??c 3: C�i ??t Dependencies
+### Bước 3: Cài Đặt Dependencies
 
 ```bash
 cd Backend/ComplianceApi
 
-# C�i ??t NuGet packages
+# Cài đặt NuGet packages
 dotnet restore
 
-# Ho?c c�i ??t th? c�ng
+# Hoặc cài đặt thủ công
 dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 8.0.2
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.2
 dotnet add package Swashbuckle.AspNetCore
 ```
 
-### B??c 4: Ch?y Migration
+### Bước 4: Chạy Migration
 
 ```bash
-# C�i ??t EF Core Tools (n?u ch?a c�)
+# Cài đặt EF Core Tools (nếu chưa có)
 dotnet tool install --global dotnet-ef
 
-# T?o migration
+# Tạo migration
 dotnet ef migrations add InitialCreate
 
-# C?p nh?t database
+# Cập nhật database
 dotnet ef database update
 ```
 
-### B??c 5: Ch?y ?ng D?ng
+### Bước 5: Chạy Ứng Dụng
 
 ```bash
 dotnet run
 ```
 
-Truy c?p Swagger UI: **https://localhost:5001** ho?c **http://localhost:5000**
+Truy cập Swagger UI: **https://localhost:5001** hoặc **http://localhost:5000**
 
 ---
 
-## ?? C?u H�nh
+## ⚙️ Cấu Hình
 
 ### `appsettings.json`
 
@@ -210,7 +210,7 @@ Truy c?p Swagger UI: **https://localhost:5001** ho?c **http://localhost:5000**
 
 ### Environment Variables (Production)
 
-??i v?i m�i tr??ng production, n�n s? d?ng bi?n m�i tr??ng thay v� hardcode password:
+Đối với môi trường production, nên sử dụng biến môi trường thay vì hardcode password:
 
 ```bash
 export ConnectionStrings__DefaultConnection="Host=...;Password=<secure-password>"
@@ -218,53 +218,53 @@ export ConnectionStrings__DefaultConnection="Host=...;Password=<secure-password>
 
 ---
 
-## ?? S? D?ng
+## 📖 Sử Dụng
 
 ### Upload File qua Swagger
 
-1. M? browser t?i `https://localhost:5001`
+1. Mở browser tại `https://localhost:5001`
 2. Expand endpoint **POST /api/Upload/upload-local**
 3. Click **Try it out**
-4. Ch?n file (PDF, DOCX, TXT, XLSX)
+4. Chọn file (PDF, DOCX, TXT, XLSX)
 5. Click **Execute**
 
-### Response Th�nh C�ng (200 OK)
+### Response Thành Công (200 OK)
 
 ```json
 {
-  "message": "T?i l�n th�nh c�ng!",
+  "message": "Tải lên thành công!",
   "documentId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "storedPath": "H:\\Blazor\\compliance-system\\Backend\\ComplianceApi\\InternalStorage\\Documents\\3fa85f64-5717-4562-b3fc-2c963f66afa6.pdf"
 }
 ```
 
-### Response L?i (400 Bad Request)
+### Response Lỗi (400 Bad Request)
 
 ```json
 {
-  "message": "File h�nh ?nh kh�ng ???c ph�p t?i l�n.",
+  "message": "File hình ảnh không được phép tải lên.",
   "blockedExtension": ".png",
-  "allowedTypes": "Ch? ch?p nh?n file t�i li?u (PDF, DOCX, XLSX, TXT, v.v.)"
+  "allowedTypes": "Chỉ chấp nhận file tài liệu (PDF, DOCX, XLSX, TXT, v.v.)"
 }
 ```
 
 ---
 
-## ?? API Endpoints
+## 🔌 API Endpoints
 
 | Method | Endpoint | Description | Request | Response |
 |--------|----------|-------------|---------|----------|
-| **POST** | `/api/Upload/upload-local` | Upload t�i li?u | `multipart/form-data` | `200 OK` / `400 Bad Request` |
+| **POST** | `/api/Upload/upload-local` | Upload tài liệu | `multipart/form-data` | `200 OK` / `400 Bad Request` |
 
 ### Swagger Documentation
 
-Xem ??y ?? t�i li?u API t?i: `https://localhost:5001/swagger`
+Xem đầy đủ tài liệu API tại: `https://localhost:5001/swagger`
 
 ---
 
-## ??? Database Schema
+## 🗄️ Database Schema
 
-### B?ng `Users`
+### Bảng `Users`
 
 ```sql
 CREATE TABLE "Users" (
@@ -276,7 +276,7 @@ CREATE TABLE "Users" (
 );
 ```
 
-### B?ng `Documents`
+### Bảng `Documents`
 
 ```sql
 CREATE TABLE "Documents" (
@@ -290,7 +290,7 @@ CREATE TABLE "Documents" (
 );
 ```
 
-### B?ng `Reports`
+### Bảng `Reports`
 
 ```sql
 CREATE TABLE "Reports" (
@@ -306,41 +306,41 @@ CREATE TABLE "Reports" (
 
 ---
 
-## ?? Development
+## 💻 Development
 
-### C?u Tr�c Th? M?c
+### Cấu Trúc Thư Mục
 
 ```
 ComplianceApi/
-??? Controllers/
-?   ??? UploadController.cs
-??? Data/
-?   ??? ApplicationDbContext.cs
-??? Models/
-?   ??? Document.cs
-?   ??? Report.cs
-?   ??? User.cs
-??? InternalStorage/
-?   ??? Documents/
-??? Migrations/
-??? Properties/
-??? appsettings.json
-??? Program.cs
-??? README.md
+├── Controllers/
+│   └── UploadController.cs
+├── Data/
+│   └── ApplicationDbContext.cs
+├── Models/
+│   ├── Document.cs
+│   ├── Report.cs
+│   └── User.cs
+├── InternalStorage/
+│   └── Documents/
+├── Migrations/
+├── Properties/
+├── appsettings.json
+├── Program.cs
+└── README.md
 ```
 
 ### Coding Standards
 
-- **C# 13** v?i **.NET 9**
+- **C# 13** với **.NET 9**
 - **Nullable Reference Types** enabled
-- **Entity Framework Core 8.0.2** (t??ng th�ch .NET 9)
+- **Entity Framework Core 8.0.2** (tương thích .NET 9)
 - **RESTful API** design patterns
 - **Repository Pattern** (planned for v2.0)
 
 ### Testing
 
 ```bash
-# Ch?y unit tests (when implemented)
+# Chạy unit tests (when implemented)
 dotnet test
 
 # Code coverage
@@ -349,44 +349,44 @@ dotnet test /p:CollectCoverage=true
 
 ---
 
-## ??? Roadmap
+## 🗺️ Roadmap
 
-### ? Phase 1: Core Backend (Ho�n Th�nh)
+### ✅ Phase 1: Core Backend (Hoàn Thành)
 - Docker + PostgreSQL setup
-- File upload v?i validation
+- File upload với validation
 - Entity Framework Migration
 - Swagger documentation
 
-### ?? Phase 2: AI Integration (Q2 2024)
-- [ ] T�ch h?p OpenAI API / Azure OpenAI
-- [ ] Ph�n t�ch t�i li?u v?i GPT-4
-- [ ] T?o b�o c�o tu�n th? t? ??ng
+### 🚧 Phase 2: AI Integration (Q2 2024)
+- [ ] Tích hợp OpenAI API / Azure OpenAI
+- [ ] Phân tích tài liệu với GPT-4
+- [ ] Tạo báo cáo tuân thủ tự động
 
-### ?? Phase 3: Authentication (Q3 2024)
+### 📅 Phase 3: Authentication (Q3 2024)
 - [ ] JWT Authentication
 - [ ] Role-based Authorization
 - [ ] User Management API
 
-### ?? Phase 4: Frontend (Q4 2024)
+### 📅 Phase 4: Frontend (Q4 2024)
 - [ ] Blazor WebAssembly UI
 - [ ] Dashboard analytics
 - [ ] Report visualization
 
 ---
 
-## ?? ?�ng G�p
+## 🤝 Đóng Góp
 
-Contributions, issues v� feature requests ???c ch�o ?�n!
+Contributions, issues và feature requests được chào đón!
 
 1. Fork repository
-2. T?o feature branch (`git checkout -b feature/AmazingFeature`)
+2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. Open Pull Request
 
 ---
 
-## ????? T�c Gi?
+## 👨‍💻 Tác Giả
 
 **Sok Kim Thanh**
 - GitHub: [@SokKimThanh](https://github.com/SokKimThanh)
@@ -394,34 +394,34 @@ Contributions, issues v� feature requests ???c ch�o ?�n!
 
 ---
 
-## ?? License
+## 📝 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## ?? Acknowledgments
+## 🙏 Acknowledgments
 
-- **.NET Community** - Amazing framework v� tools
+- **.NET Community** - Amazing framework và tools
 - **PostgreSQL** - Robust open-source database
 - **Swagger/OpenAPI** - API documentation standards
 - **Entity Framework Core** - ORM excellence
 
 ---
 
-## ?? Support
+## 📞 Support
 
-N?u b?n g?p v?n ??, h�y:
+Nếu bạn gặp vấn đề, hãy:
 1. Check [Issues](https://github.com/SokKimThanh/ComplianceApi/issues)
-2. T?o issue m?i v?i label `bug` ho?c `question`
-3. Li�n h?: support@complianceapi.com
+2. Tạo issue mới với label `bug` hoặc `question`
+3. Liên hệ: support@complianceapi.com
 
 ---
 
 <div align="center">
 
-**? N?u project n�y h?u �ch, h�y cho m?t star! ?**
+**⭐ Nếu project này hữu ích, hãy cho một star! ⭐**
 
-Made with ?? by Sok Kim Thanh
+Made with ❤️ by Sok Kim Thanh
 
 </div>
