@@ -1,0 +1,19 @@
+1. Phần mở đầu: Định vị bản thân (Senior & Product Mindset)
+"Chào anh/chị, em là Thanh. Em có hơn 8 năm kinh nghiệm trong lĩnh vực phát triển phần mềm, chuyên sâu về các hệ thống quản lý và nền tảng Web API. Điểm khác biệt của em là sự kết hợp giữa tư duy hệ thống của một Backend Developer và trải nghiệm người dùng của một Graphic Designer."
+
+2. Phần trọng tâm: "Đánh trúng" bài toán của Mobile Oasis
+Đây là lúc bạn biến dự án 22 tiếng nghiên cứu thành "át chủ bài":
+
+*"Lý do em đặc biệt quan tâm đến Mobile Oasis vì dự án hiện tại của em hoàn toàn trùng khớp với định hướng của công ty: Hệ thống đánh giá & chứng nhận tuân thủ.
+
+Em vừa hoàn thành Giai đoạn 1 của một nền tảng Compliance, giải quyết bài toán tự động hóa kiểm kê hợp đồng dựa trên tiêu chuẩn CCPA. Em đã tự thiết lập hạ tầng Docker, quản trị PostgreSQL và xây dựng luồng Upload an toàn. Đặc biệt, em đang tích hợp AI (OpenAI API) để giúp giảm thời gian kiểm tra từ 4 tiếng xuống còn 10 giây. Em hiểu rất rõ những thách thức về bảo mật và phân quyền mà một hệ thống tuân thủ cần có."*
+
+3. Phần xử lý kỹ năng: Khéo léo giải quyết "Node.js vs .NET"
+Vì JD yêu cầu Node.js/React, bạn cần cho họ thấy khả năng thích nghi:
+
+"Dù nền tảng chính của em là .NET 9 và Blazor, nhưng với kinh nghiệm làm việc chuyên sâu với JavaScript (Angular/TypeScript) hơn 4 năm tại Wahsis và Innotech, em hoàn toàn tự tin chuyển đổi sang Node.js/React trong thời gian ngắn. Với em, ngôn ngữ là công cụ, còn tư duy về Clean Architecture, CI/CD và Bảo mật mới là yếu tố cốt lõi để tạo ra sản phẩm ổn định cho công ty."
+
+4. Phần kết: Tầm nhìn sáng lập (Equity/Founding team)
+JD có nhắc đến cơ hội tham gia đội ngũ sáng lập, hãy thể hiện sự cam kết:
+
+"Em không chỉ tìm kiếm một vị trí lập trình thuần túy, mà mong muốn trở thành một Thought Partner cùng công ty phát triển các dự án AI quốc tế. Với nền tảng từ thiết kế, marketing đến kỹ thuật, em tự tin có thể đảm nhận vai trò Full-stack để đưa sản phẩm từ ý tưởng đến thực tế một cách nhanh nhất."

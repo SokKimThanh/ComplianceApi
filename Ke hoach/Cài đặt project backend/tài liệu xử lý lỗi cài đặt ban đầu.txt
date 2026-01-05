@@ -1,0 +1,183 @@
+📑 HƯỚNG DẪN CÀI ĐẶT & XỬ LÝ LỖI EF CORE + POSTGRESQL (.NET 9)
+
+Dự án: Compliance Report System (Mini) Nội dung: Cấu hình môi trường Database và Entity Framework Core 
+
+1. Khởi tạo môi trường Database (Docker)
+Sử dụng Docker Compose để tạo container PostgreSQL nhanh chóng và nhất quán.
+
+File: docker-compose.yml
+YAML
+
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: compliance_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: compliance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+
+Lệnh kiểm tra: 
+
+
+docker ps: Kiểm tra danh sách container đang chạy.
+
+
+docker logs compliance_db: Kiểm tra nhật ký hoạt động của database.
+
+2. Cài đặt các Package Entity Framework Core
+Đối với dự án .NET 9, chúng ta sẽ sử dụng các thư viện phiên bản 8.x để đảm bảo tính ổn định tối đa. Chạy các lệnh sau trong Terminal tại thư mục dự án: 
+
+Bash
+
+dotnet add package Microsoft.EntityFrameworkCore --version 8.0.2
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 8.0.2
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 8.0.2
+3. Định nghĩa các thực thể (Models)
+Tạo thư mục Models và thêm hai tệp tin sau để đại diện cho cấu trúc bảng trong Database: 
+
+Tệp: Models/Document.cs
+C#
+
+namespace ComplianceApi.Models
+{
+    public class Document
+    {
+        public Guid Id { get; set; } // 
+        public Guid UserId { get; set; } // [cite: 4]
+        public required string FileName { get; set; } // [cite: 5]
+        public required string FilePath { get; set; } // [cite: 6]
+        public required string Status { get; set; } // [cite: 7]
+        public DateTime UploadedAt { get; set; } // [cite: 8]
+    }
+}
+Tệp: Models/Report.cs
+C#
+
+namespace ComplianceApi.Models
+{
+    public class Report
+    {
+        public Guid Id { get; set; } // [cite: 9]
+        public Guid DocumentId { get; set; } // [cite: 10]
+        public int ComplianceScore { get; set; } // [cite: 11]
+        public required string Status { get; set; } // [cite: 12]
+        public required string AIResultJson { get; set; } // [cite: 13]
+        public DateTime GeneratedAt { get; set; } // [cite: 14]
+    }
+}
+4. Cấu hình Database Context
+Đây là thành phần trung tâm kết nối giữa mã nguồn C# và PostgreSQL.
+
+Tệp: Data/ApplicationDbContext.cs
+C#
+
+using Microsoft.EntityFrameworkCore;
+using ComplianceApi.Models;
+
+[cite_start]namespace ComplianceApi.Data // 
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options) { }
+
+        public DbSet<Document> Documents { get; set; } // [cite: 16]
+        public DbSet<Report> Reports { get; set; } // [cite: 17]
+    }
+}
+5. Đăng ký Dịch vụ & Kết nối
+Cấu hình ứng dụng để nhận biết chuỗi kết nối và sử dụng DbContext.
+
+Tệp: Program.cs
+C#
+
+using ComplianceApi.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+[cite_start]// 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var app = builder.Build();
+app.Run();
+Tệp: appsettings.json 
+
+JSON
+
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=compliance_db;Username=admin;Password=yourpassword"
+  }
+}
+6. Hỗ trợ EF CLI (DbContext Factory)
+Sử dụng để xử lý lỗi khi công cụ dòng lệnh (CLI) không tìm thấy DbContext trong quá trình Migration.
+
+Tệp: Data/ApplicationDbContextFactory.cs
+C#
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design; // 
+
+namespace ComplianceApi.Data
+{
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    {
+        public ApplicationDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            [cite_start]// [cite: 21]
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=compliance_db;Username=admin;Password=yourpassword");
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+    }
+}
+7. Quy trình Migration (Cập nhật Database)
+Thực hiện các lệnh sau để tạo cấu trúc bảng thực tế:
+
+Tạo bản ghi Migration:
+
+
+dotnet ef migrations add InitialCreate 
+
+Cập nhật vào Database:
+
+
+dotnet ef database update 
+
+8. Cẩm nang xử lý lỗi thường gặp
+
+Lỗi không tìm thấy DbContext: Khắc phục bằng cách thêm ApplicationDbContextFactory.
+
+
+Lỗi UseNpgsql không tồn tại: Kiểm tra lại việc cài đặt package Npgsql.EntityFrameworkCore.PostgreSQL.
+
+
+Lỗi Port 5432 Refused: Đảm bảo Docker container đang chạy; nếu trùng cổng, hãy đổi sang 5433 trong file cấu hình.
+
+
+Lỗi bảng đã tồn tại (Relation already exists): Xóa toàn bộ database/bảng cũ hoặc chạy lệnh sau để đồng bộ schema: 
+
+Bash
+
+dotnet ef migrations add Baseline --ignore-changes
+dotnet ef database update
+✅ Checklist hoàn thành Giai đoạn 1
+[ ] Container PostgreSQL trong Docker đang ở trạng thái Running.
+
+[ ] Đã cài đặt đầy đủ các Package EF Core 8.x.
+
+[ ] Các Models có Namespace chính xác và thuộc tính required.
+
+[ ] Đã có đầy đủ tệp ApplicationDbContext và Factory.
+
+[ ] Chuỗi kết nối (Connection String) khớp hoàn toàn với cấu hình Docker.
