@@ -5,22 +5,24 @@ services:
   db:
     image: postgres:15-alpine
     container_name: compliance_db
+    restart: always
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123  # Nhớ khớp với appsettings.json
+      POSTGRES_PASSWORD: admin123
       POSTGRES_DB: compliance_db
     ports:
       - "5432:5432"
     volumes:
-      - ./db-init:/docker-entrypoint-initdb.d        # Chạy script tạo bảng init.sql
-      - postgres_data:/var/lib/postgresql/data       # Giữ dữ liệu không bị mất
+      - ./db-init:/docker-entrypoint-initdb.d        # Script tạo bảng init.sql
+      - postgres_data:/var/lib/postgresql/data       # Giữ dữ liệu bền vững
 
   # 2. Backend: ASP.NET Core API
   dotnet-api:
     build: 
-      context: ./Backend/ComplianceApi               # Trỏ đúng vào folder chứa project .NET
+      context: ./Backend/ComplianceApi               # Folder chứa Dockerfile .NET
       dockerfile: Dockerfile
     container_name: dotnet_backend
+    restart: on-failure
     environment:
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=compliance_db;Username=admin;Password=admin123
       - FileStorage__LocalPath=InternalStorage/Documents
@@ -30,24 +32,26 @@ services:
     ports:
       - "5000:8080"
     volumes:
-      # Ánh xạ thư mục data_storage từ máy thật vào trong container .NET
+      # Ánh xạ folder chứa file upload từ máy thật vào container .NET
       - ./data_storage:/app/InternalStorage/Documents
 
   # 3. AI Service: Python FastAPI
   python-ai:
     build: 
-      context: ./AI_Service                          # Trỏ vào folder chứa code Python
+      context: ./AI_Service                          # Folder chứa code Python
       dockerfile: Dockerfile
     container_name: python_ai
+    restart: on-failure
     environment:
       - OPENAI_API_KEY=your_openai_key_here
+      - ANALYZE_PATH=/app/data_to_analyze            # Biến môi trường để Python biết đường dẫn đọc file
     depends_on:
       - dotnet-api
     ports:
       - "8000:8000"
     volumes:
-      # QUAN TRỌNG: Python cũng ánh xạ chung thư mục data_storage để đọc file .NET vừa lưu
-      - ./data_storage:/app/data_to_analyze
+      # QUAN TRỌNG: Dùng chung folder data_storage với .NET, nhưng đặt ở chế độ :ro (Read-Only)
+      - ./data_storage:/app/data_to_analyze:ro
 
 volumes:
-  postgres_data:                                     # Khai báo Named Volume cho Database
+  postgres_data:                                     # Named Volume cho Database
