@@ -362,35 +362,79 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
+# ============================================
+# Custom: Compliance API Specific
+# ============================================
 
-# ---- Python ----
+# ---- Internal Storage (Uploaded Files) ----
+# Ignore all files in Documents folder except .gitkeep
+InternalStorage/Documents/*
+!InternalStorage/Documents/.gitkeep
+
+# ---- Environment & Secrets ----
+.env
+.env.local
+.env.production
+*.secrets.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+
+# ---- Docker ----
+docker-compose.override.yml
+*.pid
+*.seed
+*.bak
+*.tmp
+
+# ---- Python AI Service ----
+AI_Service/__pycache__/
+AI_Service/*.pyc
+AI_Service/*.pyo
+AI_Service/*.pyd
+AI_Service/*.sqlite3
+AI_Service/venv/
+AI_Service/.venv/
+AI_Service/env/
+AI_Service/.pytest_cache/
+AI_Service/.mypy_cache/
+AI_Service/htmlcov/
+AI_Service/.coverage
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- OS files ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs ----
+*.log
+logs/
+*.log.*
+
+# ---- Temporary files ----
+*.tmp
+*.temp
+*.cache
+
+# ---- Python (General) ----
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.sqlite3
-*.log
 
 # ---- Virtual Environment ----
 venv/
 .venv/
 env/
 ENV/
-
-# ---- IDE / Editor ----
-.vscode/
-.idea/
-*.swp
-
-# ---- Docker ----
-*.pid
-*.seed
-*.bak
-*.tmp
-
-# ---- OS files ----
-.DS_Store
-Thumbs.db
 
 # ---- Test / Coverage ----
 .coverage

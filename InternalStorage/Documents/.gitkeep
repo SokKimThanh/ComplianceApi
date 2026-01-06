@@ -1,0 +1,7 @@
+# Keep this directory in Git
+# All uploaded files in this directory are ignored by .gitignore
+# Only this .gitkeep file is tracked
+
+# This ensures the InternalStorage/Documents/ directory structure
+# exists when the repository is cloned, but user-uploaded files
+# are not committed to version control.
