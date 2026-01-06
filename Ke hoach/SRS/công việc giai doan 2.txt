@@ -1,0 +1,45 @@
+Chào Thanh! Dựa trên bản SRS và kiến trúc Microservices mà chúng ta đã thảo luận, dưới đây là danh sách 6 đầu mục công việc cụ thể bạn cần thực hiện trong **Giai đoạn 2 (AI Service & Integration)**.
+
+Bạn có thể dùng danh sách này để theo dõi tiến độ hoặc đưa vào Slide cuối cùng để báo cáo:
+
+### 1. Thiết lập hạ tầng Python (AI Service)
+
+* **Khởi tạo Project:** Tạo thư mục `AI_Service`, khởi tạo môi trường ảo (Virtual Env).
+* **Cài đặt thư viện:** Cài đặt FastAPI, Uvicorn (Web Server), PyMuPDF (để đọc PDF) và OpenAI SDK.
+* **Viết Dockerfile:** Đóng gói ứng dụng Python thành Container để sẵn sàng chạy trong hệ sinh thái chung.
+
+### 2. Cấu hình Docker Shared Volume (Kết nối hạ tầng)
+
+* **Cập nhật Docker Compose:** Ánh xạ thư mục lưu trữ tệp tin (`InternalStorage/Documents`) từ máy thật vào cả hai Container (.NET và Python).
+* **Phân quyền:** Đảm bảo Python có quyền đọc (Read) các tệp tin do .NET ghi xuống.
+* **Thiết lập Network:** Đảm bảo .NET có thể gọi sang Python thông qua tên dịch vụ (Service Name) trong mạng nội bộ Docker.
+
+### 3. Triển khai Module trích xuất văn bản (Text Extraction)
+
+* **Xây dựng logic đọc PDF:** Sử dụng thư viện `fitz` (PyMuPDF) để mở file từ đường dẫn (Path) và chuyển đổi toàn bộ nội dung sang dạng chuỗi văn bản (String).
+* **Xử lý lỗi:** Kiểm tra sự tồn tại của file và xử lý các tệp tin bị lỗi định dạng hoặc có mật khẩu.
+
+### 4. Tích hợp AI & Prompt Engineering
+
+* **Kết nối API:** Cấu hình OpenAI API Key (hoặc Gemini API).
+* **Thiết kế Prompt:** Viết câu lệnh hệ thống (System Prompt) yêu cầu AI đóng vai trò luật sư số, đối soát văn bản với các điều khoản của chuẩn **CCPA**.
+* **Chuẩn hóa đầu ra:** Yêu cầu AI trả về kết quả dưới dạng **JSON** (bao gồm Score, danh sách lỗi, và đề xuất sửa đổi).
+
+### 5. Xây dựng luồng giao tiếp nội bộ (Integration)
+
+* **API Endpoint (Python):** Viết API nhận vào `documentId` và `filePath`.
+* **HttpClient (.NET):** Cập nhật Controller ở Backend .NET để tự động gọi sang Python ngay sau khi lưu file thành công.
+* **Callback/Update:** AI Service gửi kết quả về hoặc .NET tự cập nhật Database sau khi nhận phản hồi từ AI.
+
+### 6. Hoàn thiện Demo & Slide
+
+* **Kiểm thử cuối cùng:** Thực hiện luồng từ Upload -> Lưu file -> AI phân tích -> Trả kết quả JSON.
+* **Quay phim/Chụp ảnh:** Chụp lại màn hình kết quả JSON từ Swagger của Python để đưa vào Slide thuyết trình.
+
+---
+
+### 💡 Mẹo nhỏ cho Thanh:
+
+Với 2 tiếng còn lại, bạn nên ưu tiên làm **Bước 2 (Shared Volume)** và **Bước 3 (Text Extraction)** trước. Đây là "xương sống" kỹ thuật để chứng minh bạn thực sự hiểu về Microservices. Phần gọi API OpenAI (Bước 4) có thể dùng dữ liệu giả (Mock Data) để demo nếu chưa kịp xin API Key.
+
+**Thanh có muốn mình hỗ trợ viết file `docker-compose.yml` mẫu cho phần Shared Volume này không?** Đây là phần khó nhất trong danh sách trên đấy!
